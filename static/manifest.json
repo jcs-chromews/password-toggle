@@ -1,7 +1,7 @@
 {
   "name": "Password Toggle",
   "version": "0.1.0",
-  "description": "Show/Hide the password on the page",
+  "description": "Show/Hide passwords on the page",
   "manifest_version": 3,
   "author": "Jen-Chieh Shen",
   "action": {
