@@ -1,38 +1,30 @@
-# create-svelte
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Release](https://img.shields.io/github/tag/jcs-chromews/password-toggle.svg?label=release&logo=github)](https://github.com/jcs-chromews/password-toggle/releases/latest)
+<!-- [![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/dcojmbnboabakbjkdghaakedellfjjbh?logo=google-chrome&logoColor=white)](https://chromewebstore.google.com/detail/browser-statistic/emdbkfcpehdgjophcfbodcfnfmlldlfh) -->
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+# password-toggle
+> Show/Hide passwords on the page
 
-## Creating a project
+<p align="center">
+<img src="./etc/screen.png" />
+</p>
 
-If you're seeing this, you've probably already done this step. Congrats!
+## 🔧 Development
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+To build the project:
 
-# create a new project in my-app
-npm create svelte@latest my-app
+```sh
+$ npm run build
 ```
 
-## Developing
+To run the project:
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+```sh
+$ vite
 ```
 
-## Building
+## ⚜️ License
 
-To create a production version of your app:
+`password-toggle` is distributed under the terms of the MIT license.
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+See [LICENSE](./LICENSE) for details.
