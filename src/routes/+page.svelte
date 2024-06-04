@@ -1,3 +1,10 @@
+<main>
+  <div>
+    <img id="eye" src="./logo.png" alt="eye" width="80px" />
+    <span id="count">0</span>
+  </div>
+</main>
+
 <script>
   import { onMount } from "svelte";
 
@@ -7,7 +14,6 @@
     var show = false;
 
     var eye = document.getElementById("eye");
-    disable(); // disabled by default
     var count = document.getElementById("count");
 
     eye?.addEventListener("click", function () {
@@ -31,15 +37,22 @@
             func: () => {
               var inputs = document.getElementsByTagName("input");
 
+              var inner_count = 0;
+
               for (let i = 0; i < inputs.length; ++i) {
                 if (inputs[i].type == "password") {
                   inputs[i].type = "text";
-                  inputs[i].setAttribute("password-toggle", "mark");
+                  inputs[i].setAttribute("password-toggle", "on");
+                  ++inner_count;
                 }
               }
+
+              return inner_count;
             },
           })
-          .then(() => console.log("[password-toggle] show password"));
+          .then((result) => {
+            count.innerHTML = result[0].result;
+          });
       });
     }
 
@@ -54,27 +67,62 @@
             func: () => {
               var inputs = document.getElementsByTagName("input");
 
+              var inner_count = 0;
+
               for (let i = 0; i < inputs.length; ++i) {
-                if (inputs[i].getAttribute("password-toggle") == "mark") {
+                if (inputs[i].getAttribute("password-toggle") == "on") {
                   inputs[i].type = "password";
+                  inputs[i].setAttribute("password-toggle", "off");
+                  ++inner_count;
                 }
               }
+
+              return inner_count;
             },
           })
-          .then(() => console.log("[password-toggle] hide password"));
+          .then((result) => {
+            count.innerHTML = result[0].result;
+          });
       });
     }
 
-    //count.innerHTML = inner_count;
+    chrome.tabs.query(query, function (tab) {
+      chrome.scripting
+        .executeScript({
+          target: { tabId: tab[0].id },
+          func: () => {
+            var inputs = document.getElementsByTagName("input");
+            var inner_count = 0;
+            var show = false;
+
+            for (let i = 0; i < inputs.length; ++i) {
+              let input = inputs[i];
+              let mark = input.getAttribute("password-toggle");
+              let is_on = mark == "on";
+              let is_pass = input.type == "password";
+
+              if (is_pass || mark) {
+                if (is_on) {
+                  show = true;
+                }
+                ++inner_count;
+              }
+            }
+
+            return [inner_count, show];
+          },
+        })
+        .then((result) => {
+          count.innerHTML = result[0].result[0];
+          show = result[0].result[1];
+
+          if (!show) {
+            disable();
+          }
+        });
+    });
   });
 </script>
-
-<main>
-  <div>
-    <img id="eye" src="./logo.png" alt="eye" width="80px" />
-    <span id="count">0</span>
-  </div>
-</main>
 
 <style>
   :global(body) {
@@ -92,8 +140,11 @@
   }
 
   #count {
-    color: green;
+    position: absolute;
+    color: #11ffaa;
     font-weight: bold;
     font-size: 1.8em;
+    float: right;
+    right: 10px;
   }
 </style>
